@@ -1,7 +1,7 @@
 <x-layouts.main_layout title="About">
 
     <x-slot:content>
-        <header class="flex items-end bg-blue-100 px-4 ">
+        <header class="flex items-end bg-blue-100 px-4 mt-[1px]">
             <div class="m-0 w-fit py-4 ">
                 <a href="{{ route('home') }}">
                     <img src="{{ asset('logo.svg') }}" alt="logo" class="w-20 max-w-35" />
