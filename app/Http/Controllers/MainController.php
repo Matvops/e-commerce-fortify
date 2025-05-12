@@ -18,7 +18,6 @@ class MainController extends Controller
     public function home(){
         $products = $this->service->getAllProducts();
         $topSeller = $this->service->getTopsSeller();
-        error_log(json_encode($topSeller));
         return view('home', ['products' => $products, 'highlights' => $topSeller]);
     }
 
