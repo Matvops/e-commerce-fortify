@@ -1,6 +1,6 @@
 <x-layouts.main_layout title="home">
     <x-slot:content>
-        <header class="flex items-end bg-blue-100 px-4 ">
+        <header class="flex items-end bg-blue-100 px-4 mt-[1px]">
             <div class="m-0 w-fit py-4">
                 <a href="{{ route('home') }}">
                     <img src="{{ asset('logo.svg') }}" alt="logo" class="w-20 max-w-35" />
@@ -45,23 +45,25 @@
 
         <div>
             <div>
-                {{-- COMPONENT HEADER SECTION --}}
+                <x-header-section text="DESTAQUES" type="MAIN"/>
                 <div>
-                    <div>
-                        <ul>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                    <div class="w-[80%] mx-auto">
+                        <ul class="flex gap-12 flex-wrap justify-between">
+                            @foreach($highlights as $highlight)
+                                <x-card-product :product="$highlight" />
+                            @endforeach
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div>
-                {{-- COMPONENT HEADER SECTION --}}
-                <div>
-                    <ul>
-
+                <x-header-section text="VARIADOS" type="NORMAL"/>
+                <div class="w-[80%] mx-auto">
+                    <ul class="flex gap-12 flex-wrap justify-between">
+                        @foreach($products as $product)
+                            <x-card-product :product="$product" />
+                        @endforeach
                     </ul>
                 </div>
             </div>
