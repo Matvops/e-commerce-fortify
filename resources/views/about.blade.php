@@ -35,7 +35,7 @@
 
         <main class="w-[60%] mx-auto mt-36">
             <h1 class="text-center text-4xl font-semibold text-blue-900 mb-12">Projeto criado por 
-                <a href="#" class="underline decoration-2 hover:text-black transtion-all ease-in-out duration-75">Matvops</a>
+                <a href="https://github.com/Matvops" target="_blank" class="underline decoration-2 hover:text-black transtion-all ease-in-out duration-75">Matvops</a>
             </h1>
 
             <p class="text-xl font-medium leading-[2rem] tracking-[.09rem] text-justify">Projeto desenvolvido com o objetivo de praticar e consolidar conhecimentos em 
@@ -48,7 +48,7 @@
         <section class="w-[60%] mx-auto mt-24">
             <h2 class="text-center text-3xl font-semibold text-blue-900 mb-12">Contatos</h2>
             <div>
-                <h3 class="text-2xl font-semibold uppercase">Linkedin: <a href="https://www.linkedin.com/in/matheus-cadenassi-799125321/" class="underline decoration-2 text-blue-600 font-light normal-case"> https://www.linkedin.com/in/matheus-cadenassi-799125321/</a></h3>
+                <h3 class="text-2xl font-semibold uppercase">Linkedin: <a href="https://www.linkedin.com/in/matheus-cadenassi-799125321/" class="underline decoration-2 text-blue-600 font-light normal-case" target="_blank"> https://www.linkedin.com/in/matheus-cadenassi-799125321/</a></h3>
                 <h3 class="text-2xl font-semibold uppercase">Email: <span class="font-light normal-case">matheusmartinscia30@gmail.com</span></h3>
             </div>
         </section>
