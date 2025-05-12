@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MainService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
-    public function home(){
-        
-        return view('home');
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new MainService;
     }
+    
+    public function home(){
+        $products = $this->service->getAllProducts();
+        $topSeller = $this->service->getTopsSeller();
+        return view('home', ['products' => $products, 'highlights' => $topSeller]);
+    }
+
+    
 }
