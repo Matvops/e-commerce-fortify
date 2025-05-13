@@ -39,11 +39,35 @@
             @endguest
         </header>
 
-        <div>
-
-        </div>
 
         <div>
+            <form method="GET" class="w-[80%] mt-8 mx-auto">
+                @csrf
+                <datalist id="name_products"> 
+                    @foreach($products as $product)
+                        <option value="{{$product->product_name}}"></option>
+                    @endforeach
+                </datalist>
+
+                
+                <x-form-button text="Pesquisar"/>
+                
+
+                <div class="flex gap-12 mt-4">
+                    <input type="text" list="name_products" name="search" id="search" placeholder="Pesquisar" 
+                    class="flex-1 bg-zinc-100 outline-none text-lg pl-2 py-2 text-gray-600 w-[85%] focus:pl-3 focus:text-black transition-all ease-in-out duration-150">
+                
+                    <select name="filter" id="filter" class="w-[10%] max-w-40 min-w-30">
+                        <option value={{ false }}>Filters</option>
+                        <option value="MOST">Mais caro</option>
+                        <option value="LEAST">Mais barato</option>
+                        <option value="RECENT">Mais recente</option>
+                        <option value="OLD">Mais antigo</option>
+                    </select>
+                    
+                </div>
+            </form>
+
             <div>
                 <x-header-section text="DESTAQUES" type="MAIN"/>
                 <div>
