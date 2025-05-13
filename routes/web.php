@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware("auth")->group(function(){
     Route::view('/account', 'account')->name('account');
+    Route::get('/cart', [MainController::class, "getCart"])->name("cart");
 });
 
 Route::get('/', [MainController::class, 'home'])->name('home');
