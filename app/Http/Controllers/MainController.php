@@ -15,11 +15,25 @@ class MainController extends Controller
         $this->service = new MainService;
     }
     
-    public function home(){
-        $products = $this->service->getAllProducts();
+    public function home(Request $request){
+
+        $dados = [
+            'search' => $request->input('search') ?? null,
+            'filter' => $request->input('filter') ?? null,
+        ];
+
+        error_log(json_encode($dados));
+
+        $response = $this->service->getProducts($dados);
+
+        if(!$response['status']) {
+            return redirect()
+                ->back()
+                ->with('productsError', $response['message']);
+        }
+
+        $products = $response['dados'];
         $topSeller = $this->service->getTopsSeller();
         return view('home', ['products' => $products, 'highlights' => $topSeller]);
     }
-
-    
 }
