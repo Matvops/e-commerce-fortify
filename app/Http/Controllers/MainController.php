@@ -36,4 +36,17 @@ class MainController extends Controller
         $topSeller = $this->service->getTopsSeller();
         return view('home', ['products' => $products, 'highlights' => $topSeller]);
     }
+
+    public function getCart() {
+
+        $cart = $this->service->getCart();
+        $products = $this->service->getProductsCart($cart->cart_id);
+
+        error_log(json_encode($cart));
+        error_log(json_encode($products));
+        return view('cart', [
+            'cart' => $cart,
+            'products' => $products
+        ]);
+    }
 }
