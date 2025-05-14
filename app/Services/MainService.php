@@ -2,14 +2,24 @@
 
 namespace App\Services;
 
+use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 
 class MainService {
     
+
+    public function getCart(){
+        return User::find(Auth::id())->cart;
+    }
+
+    public function getProductsCart($cartId){
+        return  Cart::find($cartId)->products;
+    }
 
     public function getTopsSeller(){
         return Product::orderBy("product_quantity_sold", "DESC")
