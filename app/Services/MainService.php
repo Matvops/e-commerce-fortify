@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductCart;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 class MainService {
@@ -18,7 +21,35 @@ class MainService {
     }
 
     public function getProductsCart($cartId){
-        return  Cart::find($cartId)->products;
+        return Cart::find($cartId)->products;
+    }
+
+    public function removeCartById($cartId, $productId){
+
+        try{
+            $productId = Crypt::decrypt($productId);
+
+            DB::beginTransaction();
+
+
+            ProductCart::where('pc_cart_id', $cartId)
+                                ->where('pc_product_id', $productId)
+                                ->delete();
+
+            DB::commit();
+            return 
+                [
+                    'status' => true,
+                    'message' => 'Produto removido do carrinho.'
+                ];
+        } catch(Exception $e) { 
+            DB::rollBack();
+            return 
+                [
+                    'status' => false,
+                    'message' => 'Erro ao remover produto.'
+                ];
+        }
     }
 
     public function getTopsSeller(){
