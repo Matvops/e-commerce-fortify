@@ -13,7 +13,23 @@
         @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
         
         @theme {
-            --font-lato: "Lato", "sans-serif";
+            --main-font: 'Lato';
+        }
+
+        @keyframes apagaToast {
+              0% {
+                  opacity: 1;
+              }
+              66% { 
+                  opacity: 1;
+              }
+              100% { 
+                  opacity: 0;
+            }
+        }
+
+        .apaga-toast {
+            animation: apagaToast 1.5s forwards;
         }
     </style>
 </head>
