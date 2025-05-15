@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RemoveProductCartRequest;
 use App\Services\MainService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +23,6 @@ class MainController extends Controller
             'filter' => $request->input('filter') ?? null,
         ];
 
-        error_log(json_encode($dados));
-
         $response = $this->service->getProducts($dados);
 
         if(!$response['status']) {
@@ -42,11 +41,19 @@ class MainController extends Controller
         $cart = $this->service->getCart();
         $products = $this->service->getProductsCart($cart->cart_id);
 
-        error_log(json_encode($cart));
-        error_log(json_encode($products));
         return view('cart', [
             'cart' => $cart,
             'products' => $products
         ]);
+    }
+
+    public function removeProductCart(RemoveProductCartRequest $request){
+        $cart = $this->service->getCart();
+        $response = $this->service->removeCartById($cart->cart_id, $request->input('product_id'));
+
+        return redirect()
+                ->back()
+                ->with('productRemoveStatus', $response['status'])
+                ->with('productRemoveMessage', $response['message']);
     }
 }
