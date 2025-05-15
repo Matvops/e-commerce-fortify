@@ -51,10 +51,10 @@
 
                 <div class="flex gap-12 mt-4">
                     <input type="text" list="name_products" name="search" id="search" placeholder="Pesquisar" 
-                    class="flex-1 bg-zinc-100 outline-none text-lg pl-2 py-2 text-gray-600 w-[85%] focus:pl-3 focus:text-black transition-all ease-in-out duration-150">
+                    class="flex-1 bg-zinc-100 outline-none text-lg pl-2 py-2 text-gray-600 w-[85%] rounded focus:pl-3 focus:text-black transition-all ease-in-out duration-150">
                 
-                    <select name="filter" id="filter" class="w-[10%] max-w-40 min-w-30">
-                        <option value={{ false }}>Filters</option>
+                    <select name="filter" id="filter" class="w-[10%] max-w-40 min-w-30 bg-zinc-100 px-2 rounded cursor-pointer">
+                        <option value={{ false }}>Filtros</option>
                         <option value="MOST">Mais caro</option>
                         <option value="LEAST">Mais barato</option>
                         <option value="RECENT">Mais recente</option>
