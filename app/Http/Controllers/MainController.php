@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddProductOnCartRequest;
 use App\Http\Requests\RemoveProductCartRequest;
 use App\Services\MainService;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class MainController extends Controller
     public function getCart() {
 
         $cart = $this->service->getCart();
-        $products = $this->service->getProductsCart($cart->cart_id);
+        $products = $this->service->getProductsCart();
 
         return view('cart', [
             'cart' => $cart,
@@ -48,12 +49,26 @@ class MainController extends Controller
     }
 
     public function removeProductCart(RemoveProductCartRequest $request){
-        $cart = $this->service->getCart();
-        $response = $this->service->removeCartById($cart->cart_id, $request->input('product_id'));
+
+        $response = $this->service->removeCartById($request->input('product_id'));
 
         return redirect()
                 ->back()
                 ->with('productRemoveStatus', $response['status'])
                 ->with('productRemoveMessage', $response['message']);
     }
+
+
+    public function addProductOnCart(AddProductOnCartRequest $request) {
+
+        $productId = $request->input('product_id');
+
+        $response = $this->service->addProductOnCartAndUpdateInvetory($productId);
+
+        return redirect()
+                ->back()
+                ->with('addProductStatus', $response['status'])
+                ->with('addProductMessage', $response['message']);
+    }
+
 }
