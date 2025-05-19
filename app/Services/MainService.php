@@ -20,14 +20,16 @@ class MainService {
         return User::find(Auth::id())->cart;
     }
 
-    public function getProductsCart($cartId){
+    public function getProductsCart(){
+        $cartId = $this->getCart()->cart_id;
         return Cart::find($cartId)->products;
     }
 
-    public function removeCartById($cartId, $productId){
+    public function removeCartById($productId){
 
         try{
             $productId = Crypt::decrypt($productId);
+            $cartId = $this->getCart()->cart_id;
 
             DB::beginTransaction();
 
@@ -125,5 +127,66 @@ class MainService {
         }
 
         return $productsSearched ?? $productsFiltered;
+    }
+
+    public function addProductOnCartAndUpdateInvetory($productId){
+        try {
+            DB::beginTransaction();
+
+            $productId = Crypt::decrypt($productId);
+
+            $product = Product::where('product_id', $productId)->first();
+
+            $this->updateTotalPriceCart($product->product_price);
+
+            $this->addProductOnCart($productId);
+
+
+            DB::commit();
+            return 
+            [
+                'status' => true,
+                'message' => 'Produto adicionado ao carrinho.'
+            ];
+        } catch (Exception $e) {
+            DB::rollback();
+            error_log($e->getMessage());
+            return 
+            [
+                'status' => false,
+                'message' => 'Erro ao adicionar produto.'
+            ];
+        }
+    }
+
+    private function updateTotalPriceCart($price){
+        $cart = $this->getCart();
+        $cart->cart_total_price += $price;
+        $cart->save(); 
+    }
+
+    private function addProductOnCart($productId){
+        $cartId = $this->getCart()->cart_id;
+        
+        $productCart = ProductCart::where('pc_cart_id', $cartId)
+                                ->where('pc_product_id', $productId)
+                                ->first();
+
+        if($productCart) {
+           $productCart->pc_quantity++;
+        } else {
+            $productCart = $this->createProductCart($cartId, $productId);
+        }
+
+        $productCart->save();
+    }
+
+    private function createProductCart($cartId, $productId){
+
+        $productCart = new ProductCart();
+        $productCart->pc_product_id = $productId;
+        $productCart->pc_cart_id = $cartId;
+        $productCart->pc_quantity = 1;
+        return $productCart;
     }
 }
