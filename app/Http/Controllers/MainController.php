@@ -71,4 +71,13 @@ class MainController extends Controller
                 ->with('addProductMessage', $response['message']);
     }
 
+    public function makeOrder() {
+
+        $response = $this->service->makeOrder();
+
+        return redirect()
+                ->back()
+                ->with('makeOrderStatus', $response['status'])
+                ->with('makeOrderMessage', $response['message']);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCart;
 use App\Models\User;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class MainService {
     
@@ -21,8 +23,8 @@ class MainService {
     }
 
     public function getProductsCart(){
-        $cartId = $this->getCart()->cart_id;
-        return Cart::find($cartId)->products;
+        $cart = $this->getCart();
+        return Cart::find($cart->cart_id)->products;
     }
 
     public function removeCartById($productId){
@@ -150,7 +152,6 @@ class MainService {
             ];
         } catch (Exception $e) {
             DB::rollback();
-            error_log($e->getMessage());
             return 
             [
                 'status' => false,
@@ -188,5 +189,70 @@ class MainService {
         $productCart->pc_cart_id = $cartId;
         $productCart->pc_quantity = 1;
         return $productCart;
+    }
+
+    public function makeOrder(){
+        try {
+            DB::beginTransaction();
+
+            $cart = $this->getCart();
+            $products = Cart::find($cart->cart_id)->products;
+
+            if(empty($products))
+                throw new NotFoundResourceException("Carrinho vazio.");
+
+            $this->createOrder($cart);
+
+            foreach ($products as $product) {
+                $this->updateProduct($product);
+            }
+
+            $this->clearCart($cart);
+
+            DB::commit();
+            return 
+                [
+                    'status' => true,
+                    'message' => 'Pedido criado!',
+                    'dados' => null
+                ];
+        } catch (NotFoundResourceException $e) {
+            DB::rollBack();
+            return 
+                [
+                    'status' => false,
+                    'message' => $e->getMessage(),
+                    'dados' => null
+                ];
+        } catch (Exception $e) {
+            DB::rollBack();
+            return 
+                [
+                    'status' => false,
+                    'message' => 'Falha ao criar pedido. Contate o administrador!',
+                    'dados' => null
+                ];
+        }
+        
+    }
+
+    private function createOrder($cart){
+        $order = new Order();
+        $order->order_price = $cart->cart_total_price;
+        $order->order_user_id = $cart->cart_user_id;
+        $order->save();
+    }
+
+    private function updateProduct($product){
+        $productCart = ProductCart::where('pc_product_id', $product->product_id)->first();
+        $product->product_quantity = $product->product_quantity - $productCart->pc_quantity;
+        $product->product_quantity_sold = $product->product_quantity_sold + $productCart->pc_quantity;
+        $product->save();
+    }
+
+    private function clearCart($cart) {
+        ProductCart::where('pc_cart_id', $cart->cart_id)->delete();
+        $cart->cart_total_price = 0.0;
+        $cart->save();
     }
 }
