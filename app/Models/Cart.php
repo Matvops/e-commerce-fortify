@@ -12,6 +12,11 @@ class Cart extends Model
 {
     protected $primaryKey = "cart_id";
 
+    protected $fillable =
+    [
+        'cart_total_price'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'cart_user_id');

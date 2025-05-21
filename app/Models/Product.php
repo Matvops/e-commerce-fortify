@@ -21,6 +21,11 @@ class Product extends Model
         'update_at',
     ];
 
+    protected $casts = 
+    [
+        'product_price' => 'float',
+    ];
+
     public function carts(): BelongsToMany
     {
         return $this->belongsToMany(Cart::class, "product_cart", "pc_product_id", "pc_product_id");

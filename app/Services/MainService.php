@@ -31,14 +31,21 @@ class MainService {
 
         try{
             $productId = Crypt::decrypt($productId);
-            $cartId = $this->getCart()->cart_id;
+            $cart = $this->getCart();
 
             DB::beginTransaction();
 
 
-            ProductCart::where('pc_cart_id', $cartId)
+            $product = Cart::find($cart->cart_id)->products()->first();
+
+
+            $cart->cart_total_price = $cart->cart_total_price - $product->product_price;
+
+            ProductCart::where('pc_cart_id', $cart->cart_id)
                                 ->where('pc_product_id', $productId)
                                 ->delete();
+            
+            $cart->save();
 
             DB::commit();
             return 
