@@ -35,33 +35,49 @@
             @endguest
         </header>
 
+        <section class="mb-2">
+            <section class="w-[40%] bg-zinc-100 mx-auto mt-25 rounded shadow-zinc-200 shadow-md">
+                <h1 class="uppercase text-4xl font-semibold text-center py-8 text-blue-900">Histórico de compras</h1>
+
+                <ul class="p-0 m-0 border-color-black max-h-[300px] overflow-y-auto">
+                    @if($status)
+                        @foreach($dados as $order)
+                            <li class="border-color-black border-t-2 px-3 py-3 text-2xl flex justify-between">
+                                <div class="font-semibold">{{ $order['created_at'] }}</div> 
+                                <div>R$ {{$order['order_price']}}</div>
+                            </li>
+                        @endforeach
+                    @else
+                        <h1>{{ $message }}</h1>
+                    @endif
+                </ul>
+
+            </section>
+
+            <section class="w-[40%] bg-zinc-100 mx-auto mt-10 rounded shadow-zinc-200 shadow-md">
+                <form action="{{ route('user-profile-information.update') }}" method="POST" class="px-6 py-3">
+                    @csrf 
+                    @method('PUT')
+
+                    <legend class="text-blue-900 text-4xl font-bold my-8">Dados Pessoais</legend>
+                    <fieldset class="flex flex-col gap-8">
+
+                        <div class="flex flex-col gap-2">
+                            <label for="name" class="text-blue-900 text-2xl font-medium">Nome</label>
+                            <input type="name" name="name" id="name" value="{{ Auth::user()->name }}" placeholder="Digite o seu nome..." autocomplete="off"
+                                class="bg-white outline-none text-lg pl-2 py-1 text-gray-600 w-[80%] focus:pl-3 focus:text-black transition-all ease-in-out duration-150">
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label for="email" class="text-blue-900 text-2xl font-medium">Email</label>
+                            <input type="email" name="email" id="email" value="{{ Auth::user()->email }}" placeholder="Digite o email..." autocomplete="off"
+                                class="bg-white outline-none text-lg pl-2 py-1 text-gray-600 w-[80%] focus:pl-3 focus:text-black transition-all ease-in-out duration-150">
+                        </div>
+
+                        <x-form-button text="Atualizar" />
+                    </fieldset>
+                </form>
+            </section>
         <section>
-
-        </section>
-
-        <section class="w-[40%] bg-zinc-100 mx-auto mt-35 rounded shadow-zinc-200 shadow-md">
-            <form action="{{ route('user-profile-information.update') }}" method="POST" class="px-6 py-3">
-                @csrf 
-                @method('PUT')
-
-                <legend class="text-blue-900 text-4xl font-bold my-8">Dados Pessoais</legend>
-                <fieldset class="flex flex-col gap-8">
-
-                    <div class="flex flex-col gap-2">
-                        <label for="name" class="text-blue-900 text-2xl font-medium">Nome</label>
-                        <input type="name" name="name" id="name" value="{{ Auth::user()->name }}" placeholder="Digite o seu nome..." autocomplete="off"
-                            class="bg-white outline-none text-lg pl-2 py-1 text-gray-600 w-[80%] focus:pl-3 focus:text-black transition-all ease-in-out duration-150">
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label for="email" class="text-blue-900 text-2xl font-medium">Email</label>
-                        <input type="email" name="email" id="email" value="{{ Auth::user()->email }}" placeholder="Digite o email..." autocomplete="off"
-                            class="bg-white outline-none text-lg pl-2 py-1 text-gray-600 w-[80%] focus:pl-3 focus:text-black transition-all ease-in-out duration-150">
-                    </div>
-
-                    <x-form-button text="Atualizar" />
-                </fieldset>
-            </form>
-        </section>
     </x-slot:content>
 </x-layouts.main_layout>
