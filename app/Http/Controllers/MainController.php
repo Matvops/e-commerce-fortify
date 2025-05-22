@@ -80,4 +80,14 @@ class MainController extends Controller
                 ->with('makeOrderStatus', $response['status'])
                 ->with('makeOrderMessage', $response['message']);
     }
+
+    public function getOrders() {
+        $response = $this->service->getOrders();
+
+        return view('account', [
+            'dados' => $response['dados'],
+            'message' => $response['message'],
+            'status' => $response['status']
+        ]);  
+    }
 }

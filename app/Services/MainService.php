@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCart;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
+
 
 class MainService {
     
@@ -205,7 +207,7 @@ class MainService {
             $cart = $this->getCart();
             $products = Cart::find($cart->cart_id)->products;
 
-            if(empty($products))
+            if(!$products)
                 throw new NotFoundResourceException("Carrinho vazio.");
 
             $this->createOrder($cart);
@@ -261,5 +263,35 @@ class MainService {
         ProductCart::where('pc_cart_id', $cart->cart_id)->delete();
         $cart->cart_total_price = 0.0;
         $cart->save();
+    }
+
+    public function getOrders(){
+        try {
+
+            $orders = User::where('id', Auth::id())->first()->orders()->get()->toArray();
+
+            if(!$orders)
+                throw new NotFoundResourceException('Você ainda não possui pedidos!');
+
+            foreach ($orders as $key => $order) {
+                $orders[$key]['created_at'] = $this->formatDate($order);
+            }
+
+            return [
+                'status' => true,
+                'message' => '',
+                'dados' => $orders
+            ];
+        } catch (NotFoundResourceException $e) {
+            return [
+                'status' => false,
+                'message' => $e->getMessage(),
+                'dados' => null
+            ];
+        } 
+    }
+
+    private function formatDate($order){
+        return Carbon::parse($order['created_at'])->format('d/m/Y h:i:s');
     }
 }
