@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
+use function PHPUnit\Framework\isEmpty;
+
 class MainService {
     
 
@@ -205,7 +207,7 @@ class MainService {
             $cart = $this->getCart();
             $products = Cart::find($cart->cart_id)->products;
 
-            if(empty($products))
+            if(isEmpty($products))
                 throw new NotFoundResourceException("Carrinho vazio.");
 
             $this->createOrder($cart);
