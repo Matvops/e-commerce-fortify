@@ -1,4 +1,4 @@
-<x-layouts.main_layout title="REgister">
+<x-layouts.main_layout title="Register">
     <x-slot:content>
         <div class="w-[40%] bg-zinc-100 mx-auto mt-35 rounded shadow-zinc-200 shadow-md">
             <form action="{{ route('register.store') }}" method="POST" class="px-6 py-2">

@@ -271,7 +271,7 @@ class MainService {
             $orders = User::where('id', Auth::id())->first()->orders()->get()->toArray();
 
             if(!$orders)
-                throw new NotFoundResourceException('Você ainda não possui pedidos!');
+                throw new NotFoundResourceException('Você ainda não possui pedidos.');
 
             foreach ($orders as $key => $order) {
                 $orders[$key]['created_at'] = $this->formatDate($order);

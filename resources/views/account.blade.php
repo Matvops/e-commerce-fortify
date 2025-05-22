@@ -48,7 +48,7 @@
                             </li>
                         @endforeach
                     @else
-                        <h1>{{ $message }}</h1>
+                        <h1 class="text-center font-medium text-2xl pb-7">{{ $message }}</h1>
                     @endif
                 </ul>
 
