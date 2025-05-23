@@ -21,7 +21,21 @@ class MainService {
     
 
     public function getCart(){
-        return User::find(Auth::id())->cart;
+        $cart = User::find(Auth::id())->cart;
+
+        if(empty($cart)) {
+            $cart = $this->createCart();
+        }
+
+        return $cart;
+    }
+
+    private function createCart(){
+        $cart = new Cart();
+        $cart->cart_user_id = Auth::id();
+        $cart->cart_total_price = 0.00;
+        $cart->save();
+        return $cart;
     }
 
     public function getProductsCart(){
@@ -271,7 +285,7 @@ class MainService {
             $orders = User::where('id', Auth::id())->first()->orders()->get()->toArray();
 
             if(!$orders)
-                throw new NotFoundResourceException('Você ainda não possui pedidos!');
+                throw new NotFoundResourceException('Você ainda não possui pedidos.');
 
             foreach ($orders as $key => $order) {
                 $orders[$key]['created_at'] = $this->formatDate($order);

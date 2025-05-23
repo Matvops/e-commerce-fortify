@@ -1,6 +1,6 @@
 <x-layouts.main_layout title="account">
     <x-slot:content>
-        <header class="flex items-end bg-blue-100 px-4 mt-[1px]">
+        <header class="flex items-end bg-blue-500/30 px-4 mt-[1px]">
             <div class="m-0 w-fit py-4">
                 <a href="{{ route('home') }}">
                     <img src="{{ asset('logo.svg') }}" alt="logo" class="w-20 max-w-35" />
@@ -48,7 +48,7 @@
                             </li>
                         @endforeach
                     @else
-                        <h1>{{ $message }}</h1>
+                        <h1 class="text-center font-medium text-2xl pb-7">{{ $message }}</h1>
                     @endif
                 </ul>
 
