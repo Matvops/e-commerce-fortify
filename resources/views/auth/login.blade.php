@@ -22,7 +22,7 @@
                   
                 <div class="flex my-12 items-center">
                     <div class="flex flex-col gap-2">
-                        <a href="#" class="text-blue-900 underline">Esqueci minha senha</a>
+                        <a href="{{ route('password.request') }}" class="text-blue-900 underline">Esqueci minha senha</a>
                         <a href="{{ route('register') }}" class="text-blue-900 underline">Registre-se</a>
                     </div>
                     <div class="ml-auto">
