@@ -40,7 +40,12 @@ class MainService {
 
     public function getProductsCart(){
         $cart = $this->getCart();
-        return Cart::find($cart->cart_id)->products;
+        $products = Cart::find($cart->cart_id)->products;
+        foreach($products as $product) {
+            $product->pc_quantity = $product->pivot->pc_quantity;
+        }
+
+        return $products;
     }
 
     public function removeCartById($productId){

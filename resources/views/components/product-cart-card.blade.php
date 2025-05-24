@@ -6,7 +6,7 @@
 
     <div class="flex-1 px-12 pt-6">
         <h2 class="text-3xl font-bold mb-2">{{ $product->product_name }}</h2>
-        <p class="text-2xl font-medium text-blue-900">R$ {{ $product->product_price }}</p>
+        <p class="text-2xl font-medium text-blue-900">R$ {{ $product->product_price }} <span class="px-4">x{{ $product->pc_quantity }}</span></p>
     </div>
 
     <div class="pr-4 self-center">
