@@ -1,6 +1,6 @@
 <x-layouts.main_layout title="account">
     <x-slot:content>
-        <header class="flex items-end bg-blue-500/30 px-4 mt-[1px]">
+        <header class="flex items-end bg-blue-200 px-4 mt-[1px] sticky top-0 left-0">
             <div class="m-0 w-fit py-4">
                 <a href="{{ route('home') }}">
                     <img src="{{ asset('logo.svg') }}" alt="logo" class="w-20 max-w-35" />

@@ -22,7 +22,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 20,
                 'product_price' => 1799.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/monitor-gamer-27.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/monitor144.jpg',
                 'created_at' => $now,
             ],
             [
@@ -30,7 +30,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 35,
                 'product_price' => 349.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/teclado-redragon.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/tecladoRedDragon.jpg',
                 'created_at' => $now,
             ],
             [
@@ -38,7 +38,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 50,
                 'product_price' => 289.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/mouse-g502.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/mouse-logitech.jpeg',
                 'created_at' => $now,
             ],
             [
@@ -46,7 +46,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 25,
                 'product_price' => 499.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/headset-hyperx.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/hyperx.jpg',
                 'created_at' => $now,
             ],
             [
@@ -54,7 +54,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 10,
                 'product_price' => 1299.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/cadeira-gamer-thunderx3.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/cadeiraThunder.webp',
                 'created_at' => $now,
             ],
             [
@@ -62,7 +62,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 7,
                 'product_price' => 4599.00,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/notebook-acer-nitro5.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/acerNitro5.jpeg',
                 'created_at' => $now,
             ],
             [
@@ -70,7 +70,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 12,
                 'product_price' => 2299.00,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/rtx-3060.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/rtx3060.jpg',
                 'created_at' => $now,
             ],
             [
@@ -78,7 +78,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 15,
                 'product_price' => 1649.99,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/ryzen-7-5800x.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/ryzen7.jpg',
                 'created_at' => $now,
             ],
             [
@@ -86,7 +86,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 20,
                 'product_price' => 899.99,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/placa-mae-b550.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/asustuf.jpg',
                 'created_at' => $now,
             ],
             [
@@ -94,7 +94,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 40,
                 'product_price' => 399.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/ram-16gb-ddr4.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/memoriaRam.jpg',
                 'created_at' => $now,
             ],
             [
@@ -102,7 +102,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 30,
                 'product_price' => 499.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/ssd-1tb-kingston.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/ssd.webp',
                 'created_at' => $now,
             ],
             [
@@ -110,7 +110,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 18,
                 'product_price' => 459.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/gabinete-rgb.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/gabinete.webp',
                 'created_at' => $now,
             ],
             [
@@ -118,7 +118,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 25,
                 'product_price' => 429.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/fonte-650w.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/fonte.jpg',
                 'created_at' => $now,
             ],
             [
@@ -126,7 +126,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 10,
                 'product_price' => 599.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/watercooler-240mm.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/waterCooler.webp',
                 'created_at' => $now,
             ],
             [
@@ -134,7 +134,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 20,
                 'product_price' => 399.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/controle-xbox.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/controleXBOX.webp',
                 'created_at' => $now,
             ],
             [
@@ -142,7 +142,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 18,
                 'product_price' => 449.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/controle-ps5.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/ps5DualSense.jpg',
                 'created_at' => $now,
             ],
             [
@@ -150,7 +150,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 15,
                 'product_price' => 349.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/webcam-logitech.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/webCamFullHD.jpg',
                 'created_at' => $now,
             ],
             [
@@ -158,7 +158,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 12,
                 'product_price' => 249.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/microfone-bm800.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/microfone.jpg',
                 'created_at' => $now,
             ],
             [
@@ -166,7 +166,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 30,
                 'product_price' => 89.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/hub-usb-4portas.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/hub.webp',
                 'created_at' => $now,
             ],
             [
@@ -174,7 +174,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 50,
                 'product_price' => 49.90,
                 'product_quantity_sold' => 1,
-                'product_image' => '#/cabo-hdmi.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/hdmi-2.jpg',
                 'created_at' => $now,
             ],
             [
@@ -182,7 +182,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 35,
                 'product_price' => 39.90,
                 'product_quantity_sold' => 1,
-                'product_image' => '#/adaptador-bluetooth.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/adaptador-bluetooth.jpg',
                 'created_at' => $now,
             ],
             [
@@ -190,7 +190,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 28,
                 'product_price' => 99.90,
                 'product_quantity_sold' => 1,
-                'product_image' => '#/mousepad-xxl.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/mousepad-xxl.jpeg',
                 'created_at' => $now,
             ],
             [
@@ -198,7 +198,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 22,
                 'product_price' => 129.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/suporte-headset.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/suporte.jpg',
                 'created_at' => $now,
             ],
             [
@@ -206,7 +206,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 16,
                 'product_price' => 199.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/luminaria-rgb.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/luminaria.jpg',
                 'created_at' => $now,
             ],
             [
@@ -214,7 +214,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 40,
                 'product_price' => 59.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/cooler-fan-120mm.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/cooler.webp',
                 'created_at' => $now,
             ],
             [
@@ -222,7 +222,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 20,
                 'product_price' => 139.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/base-refrigerada.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/baseRefrigerada.jpg',
                 'created_at' => $now,
             ],
             [
@@ -230,7 +230,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 25,
                 'product_price' => 159.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/extensor-wifi.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/wifi.jpg',
                 'created_at' => $now,
             ],
             [
@@ -238,7 +238,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 18,
                 'product_price' => 249.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/estabilizador-500va.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/estabilizador.webp',
                 'created_at' => $now,
             ],
             [
@@ -246,7 +246,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 10,
                 'product_price' => 999.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/nobreak-1200va.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/nobreak.webp',
                 'created_at' => $now,
             ],
             [
@@ -254,7 +254,7 @@ class ProductsTableSeeder extends Seeder
                 'product_quantity' => 30,
                 'product_price' => 279.90,
                 'product_quantity_sold' => 0,
-                'product_image' => '#/mi-band7.jpg',
+                'product_image' => 'projects/e-commerce/storage/app/public/images/smartwatch.webp',
                 'created_at' => $now,
             ],
         ]);
