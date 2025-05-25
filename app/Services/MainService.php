@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Utils\Response;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
@@ -17,7 +18,8 @@ class MainService {
                             ->get();
     }
 
-    public function getProducts($dados){
+    public function getProducts($dados): Response
+    {
 
         $products = null;
 
@@ -30,23 +32,12 @@ class MainService {
                 $products = $this->getProductsFiltered($productsSearched, $productsFiltered);
             }
     
-            return [
-                'status' => true,
-                'message' => '',
-                'dados' => $products
-            ];
+
+            return Response::getResponse(true, '', $products);
         } catch (InvalidArgumentException $e){
-            return [
-                'status' => false,
-                'message' => $e->getMessage(),
-                'dados' => null
-            ];
+            return Response::getResponse(false, $e->getMessage());
         } catch (Exception $e) {
-            return [
-                'status' => false,
-                'message' => "Favor entrar em contato com o administrador do sistema!",
-                'dados' => null
-            ];
+            return Response::getResponse(false, "Favor entrar em contato com o administrador do sistema!");
         }
     }
 
