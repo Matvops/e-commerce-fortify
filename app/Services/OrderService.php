@@ -2,19 +2,18 @@
 
 namespace App\Services;
 
-use App\Models\Cart;
 use App\Models\Order;
 use App\Models\ProductCart;
-use App\Models\User;
+use App\Utils\Response;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class OrderService {
 
-    public function getOrders(){
+    public function getOrders(): Response
+    {
         try {
 
             $orders = UserService::getUser()
@@ -29,17 +28,9 @@ class OrderService {
                 $orders[$key]['created_at'] = $this->formatDate($order);
             }
 
-            return [
-                'status' => true,
-                'message' => '',
-                'dados' => $orders
-            ];
+            return Response::getResponse(true, '', $orders);
         } catch (NotFoundResourceException $e) {
-            return [
-                'status' => false,
-                'message' => $e->getMessage(),
-                'dados' => null
-            ];
+            return Response::getResponse(false, $e->getMessage());
         } 
     }
 
@@ -49,7 +40,8 @@ class OrderService {
                     ->format('d/m/Y H:i:s');
     }
     
-    public function makeOrder(){
+    public function makeOrder(): Response
+    {
         try {
             DB::beginTransaction();
 
@@ -68,28 +60,14 @@ class OrderService {
             $this->clearCart($cart);
 
             DB::commit();
-            return 
-                [
-                    'status' => true,
-                    'message' => 'Pedido criado!',
-                    'dados' => null
-                ];
+
+            return Response::getResponse(true, 'Pedido criado!');
         } catch (NotFoundResourceException $e) {
             DB::rollBack();
-            return 
-                [
-                    'status' => false,
-                    'message' => $e->getMessage(),
-                    'dados' => null
-                ];
+            return Response::getResponse(false, $e->getMessage());
         } catch (Exception $e) {
             DB::rollBack();
-            return 
-                [
-                    'status' => false,
-                    'message' => 'Falha ao criar pedido. Contate o administrador!',
-                    'dados' => null
-                ];
+            return Response::getResponse(false, 'Falha ao criar pedido. Contate o administrador!');
         }
         
     }
