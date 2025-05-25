@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\ProductCart;
+use App\Utils\Funcoes;
 use App\Utils\Response;
 use Carbon\Carbon;
 use Exception;
@@ -15,29 +16,19 @@ class OrderService {
     public function getOrders(): Response
     {
         try {
-
             $orders = UserService::getUser()
                         ->orders()
                         ->get()
                         ->toArray();
 
-            if(!$orders)
-                throw new NotFoundResourceException('Você ainda não possui pedidos.');
-
             foreach ($orders as $key => $order) {
-                $orders[$key]['created_at'] = $this->formatDate($order);
+                $orders[$key]['created_at'] = Funcoes::formatDateTime($order['created_at']);
             }
 
             return Response::getResponse(true, '', $orders);
         } catch (NotFoundResourceException $e) {
             return Response::getResponse(false, $e->getMessage());
         } 
-    }
-
-    private function formatDate($order){
-        return Carbon::parse($order['created_at'])
-                    ->subHours(3)
-                    ->format('d/m/Y H:i:s');
     }
     
     public function makeOrder(): Response
