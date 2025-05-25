@@ -3,26 +3,22 @@
 namespace App\Services;
 
 use App\Models\Cart;
-use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCart;
 use App\Models\User;
-use Carbon\Carbon;
-use DateTimeZone;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class CartService {
 
 
-    public function getCart(){
+    public static function getCart(){
         $cart = User::find(Auth::id())->cart;
 
         if(empty($cart)) {
-            $cart = $this->createCart();
+            $cart = self::createCart();
         }
 
         return $cart;
@@ -36,8 +32,8 @@ class CartService {
         return $cart;
     }
 
-    public function getProductsCart(){
-        $cart = $this->getCart();
+    public static function getProductsCart(){
+        $cart = self::getCart();
         $products = Cart::find($cart->cart_id)->products;
         foreach($products as $product) {
             $product->pc_quantity = $product->pivot->pc_quantity;
@@ -50,7 +46,7 @@ class CartService {
 
         try{
             $productId = Crypt::decrypt($productId);
-            $cart = $this->getCart();
+            $cart = self::getCart();
 
             DB::beginTransaction();
 
@@ -58,14 +54,12 @@ class CartService {
             $product = Cart::find($cart->cart_id)->products()->first();
 
 
-            $cart->cart_total_price = $cart->cart_total_price - $product->product_price;
+            $this->subtractPriceFromCart($cart, $product);
 
             ProductCart::where('pc_cart_id', $cart->cart_id)
                                 ->where('pc_product_id', $productId)
                                 ->delete();
             
-            $cart->save();
-
             DB::commit();
             return 
                 [
@@ -82,17 +76,20 @@ class CartService {
         }
     }
 
-    public function addProductOnCartAndUpdateInvetory($productId){
+    private function subtractPriceFromCart($cart, $product){
+        $cart->cart_total_price = $cart->cart_total_price - $product->product_price;
+        $cart->save();
+    }
+
+    public function addProductOnCart($productId){
         try {
             DB::beginTransaction();
 
             $productId = Crypt::decrypt($productId);
-
             $product = Product::where('product_id', $productId)->first();
 
             $this->updateTotalPriceCart($product->product_price);
-
-            $this->addProductOnCart($productId);
+            $this->addProduct($productId);
 
 
             DB::commit();
@@ -112,13 +109,13 @@ class CartService {
     }
 
     private function updateTotalPriceCart($price){
-        $cart = $this->getCart();
+        $cart = self::getCart();
         $cart->cart_total_price += $price;
         $cart->save(); 
     }
 
-    private function addProductOnCart($productId){
-        $cartId = $this->getCart()->cart_id;
+    private function addProduct($productId){
+        $cartId = self::getCart()->cart_id;
         
         $productCart = ProductCart::where('pc_cart_id', $cartId)
                                 ->where('pc_product_id', $productId)
@@ -140,102 +137,5 @@ class CartService {
         $productCart->pc_cart_id = $cartId;
         $productCart->pc_quantity = 1;
         return $productCart;
-    }
-
-    public function makeOrder(){
-        try {
-            DB::beginTransaction();
-
-            $cart = $this->getCart();
-            $products = Cart::find($cart->cart_id)->products;
-
-            if(!$products)
-                throw new NotFoundResourceException("Carrinho vazio.");
-
-            $this->createOrder($cart);
-
-            foreach ($products as $product) {
-                $this->updateProduct($product);
-            }
-
-            $this->clearCart($cart);
-
-            DB::commit();
-            return 
-                [
-                    'status' => true,
-                    'message' => 'Pedido criado!',
-                    'dados' => null
-                ];
-        } catch (NotFoundResourceException $e) {
-            DB::rollBack();
-            return 
-                [
-                    'status' => false,
-                    'message' => $e->getMessage(),
-                    'dados' => null
-                ];
-        } catch (Exception $e) {
-            DB::rollBack();
-            return 
-                [
-                    'status' => false,
-                    'message' => 'Falha ao criar pedido. Contate o administrador!',
-                    'dados' => null
-                ];
-        }
-        
-    }
-
-    private function createOrder($cart){
-        $order = new Order();
-        $order->order_price = $cart->cart_total_price;
-        $order->order_user_id = $cart->cart_user_id;
-        $order->save();
-    }
-
-    private function updateProduct($product){
-        $productCart = ProductCart::where('pc_product_id', $product->product_id)->first();
-        $product->product_quantity = $product->product_quantity - $productCart->pc_quantity;
-        $product->product_quantity_sold = $product->product_quantity_sold + $productCart->pc_quantity;
-        $product->save();
-    }
-
-    private function clearCart($cart) {
-        ProductCart::where('pc_cart_id', $cart->cart_id)->delete();
-        $cart->cart_total_price = 0.0;
-        $cart->save();
-    }
-
-    public function getOrders(){
-        try {
-
-            $orders = User::where('id', Auth::id())->first()->orders()->get()->toArray();
-
-            if(!$orders)
-                throw new NotFoundResourceException('Você ainda não possui pedidos.');
-
-            foreach ($orders as $key => $order) {
-                $orders[$key]['created_at'] = $this->formatDate($order);
-            }
-
-            return [
-                'status' => true,
-                'message' => '',
-                'dados' => $orders
-            ];
-        } catch (NotFoundResourceException $e) {
-            return [
-                'status' => false,
-                'message' => $e->getMessage(),
-                'dados' => null
-            ];
-        } 
-    }
-
-    private function formatDate($order){
-        return Carbon::parse($order['created_at'])
-                    ->subHours(3)
-                    ->format('d/m/Y H:i:s');
     }
 }
