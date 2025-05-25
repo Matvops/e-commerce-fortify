@@ -26,14 +26,15 @@ class MainController extends Controller
 
         $response = $this->service->getProducts($dados);
 
-        if(!$response['status']) {
+        if(!$response->getStatus()) {
             return redirect()
                 ->back()
-                ->with('productsError', $response['message']);
+                ->with('productsError', $response->getMessage());
         }
 
-        $products = $response['dados'];
+        $products = $response->getDados();
         $topSeller = $this->service->getTopsSeller();
+        
         return view('home', ['products' => $products, 'highlights' => $topSeller]);
     }
 }
