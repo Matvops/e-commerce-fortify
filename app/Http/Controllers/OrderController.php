@@ -20,17 +20,17 @@ class OrderController extends Controller
 
         return redirect()
                 ->back()
-                ->with('makeOrderStatus', $response['status'])
-                ->with('makeOrderMessage', $response['message']);
+                ->with('makeOrderStatus', $response->getStatus())
+                ->with('makeOrderMessage', $response->getMessage());
     }
 
     public function getOrders() {
         $response = $this->service->getOrders();
 
         return view('account', [
-            'dados' => $response['dados'],
-            'message' => $response['message'],
-            'status' => $response['status']
+            'dados' => $response->getDados(),
+            'message' => $response->getMessage(),
+            'status' => $response->getStatus()
         ]);  
     }
 }
