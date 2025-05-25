@@ -18,7 +18,7 @@ class CartController extends Controller
     public function getCart() {
 
         $cart = CartService::getCart();
-        $products = CartService::getProductsCart();
+        $products = CartService::getProductsCartWithPivotColumnPcQuantity();
 
         return view('cart', [
             'cart' => $cart,

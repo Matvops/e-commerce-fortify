@@ -34,7 +34,15 @@ class CartService {
 
     public static function getProductsCart(){
         $cart = self::getCart();
+
         $products = Cart::find($cart->cart_id)->products;
+
+        return $products;
+    }
+
+    public static function getProductsCartWithPivotColumnPcQuantity(){
+        $products = self::getProductsCart();
+
         foreach($products as $product) {
             $product->pc_quantity = $product->pivot->pc_quantity;
         }
