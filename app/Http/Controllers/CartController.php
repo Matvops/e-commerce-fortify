@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddProductOnCartRequest;
 use App\Http\Requests\RemoveProductCartRequest;
 use App\Services\CartService;
-use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -18,8 +17,8 @@ class CartController extends Controller
 
     public function getCart() {
 
-        $cart = $this->service->getCart();
-        $products = $this->service->getProductsCart();
+        $cart = CartService::getCart();
+        $products = CartService::getProductsCart();
 
         return view('cart', [
             'cart' => $cart,
@@ -42,31 +41,11 @@ class CartController extends Controller
 
         $productId = $request->input('product_id');
 
-        $response = $this->service->addProductOnCartAndUpdateInvetory($productId);
+        $response = $this->service->addProductOnCart($productId);
 
         return redirect()
                 ->back()
                 ->with('addProductStatus', $response['status'])
                 ->with('addProductMessage', $response['message']);
-    }
-
-    public function makeOrder() {
-
-        $response = $this->service->makeOrder();
-
-        return redirect()
-                ->back()
-                ->with('makeOrderStatus', $response['status'])
-                ->with('makeOrderMessage', $response['message']);
-    }
-
-    public function getOrders() {
-        $response = $this->service->getOrders();
-
-        return view('account', [
-            'dados' => $response['dados'],
-            'message' => $response['message'],
-            'status' => $response['status']
-        ]);  
     }
 }
