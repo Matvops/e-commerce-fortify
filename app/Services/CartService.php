@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class CartService {
 
@@ -51,22 +52,27 @@ class CartService {
         return $products;
     }
 
-    public function removeCartById($productId){
+    public function removeProductCartById($productId){
 
         try{
             $productId = Crypt::decrypt($productId);
-            $cart = self::getCart();
 
             DB::beginTransaction();
 
-            $product = Cart::find($cart->cart_id)->products()->first();
+            $cart = self::getCart();
+            $product = Cart::find($cart->cart_id)
+                ->products()
+                ->where('product_id', $productId)
+                ->first();
 
             $this->subtractPriceFromCart($cart, $product);
 
-            ProductCart::where('pc_cart_id', $cart->cart_id)
+            $productCart = ProductCart::where('pc_cart_id', $cart->cart_id)
                                 ->where('pc_product_id', $productId)
-                                ->delete();
+                                ->first();
             
+            $this->removeProductCart($productCart);
+
             DB::commit();
             return Response::getResponse(true, 'Produto removido do carrinho');
         } catch(Exception $e) { 
@@ -80,12 +86,25 @@ class CartService {
         $cart->save();
     }
 
+    private function removeProductCart($productCart) {
+        if($productCart->pc_quantity > 1) {
+            $productCart->pc_quantity--;
+            $productCart->save();
+        } else {
+            $productCart->delete();
+        }
+    }
+
     public function addProductOnCart($productId){
         try {
             DB::beginTransaction();
 
             $productId = Crypt::decrypt($productId);
             $product = Product::where('product_id', $productId)->first();
+
+            if(empty($product)) {
+                throw new NotFoundResourceException('Produto não encontrado');
+            }
 
             $this->updateTotalPriceCart($product->product_price);
             $this->addProduct($productId);
@@ -94,6 +113,9 @@ class CartService {
             DB::commit();
 
             return Response::getResponse(true, 'Produto adicionado ao carrinho.');
+        } catch (NotFoundResourceException $e) {
+            DB::rollback();
+            return Response::getResponse(false, $e->getMessage());
         } catch (Exception $e) {
             DB::rollback();
             return Response::getResponse(false, 'Erro ao adicionar produto.');
@@ -123,11 +145,11 @@ class CartService {
     }
 
     private function createProductCart($cartId, $productId){
-
         $productCart = new ProductCart();
         $productCart->pc_product_id = $productId;
         $productCart->pc_cart_id = $cartId;
         $productCart->pc_quantity = 1;
+
         return $productCart;
     }
 }
