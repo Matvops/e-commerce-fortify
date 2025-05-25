@@ -59,9 +59,7 @@ class CartService {
 
             DB::beginTransaction();
 
-
             $product = Cart::find($cart->cart_id)->products()->first();
-
 
             $this->subtractPriceFromCart($cart, $product);
 
