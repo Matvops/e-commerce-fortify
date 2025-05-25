@@ -12,7 +12,7 @@
             </navigation>
 
             @auth
-                <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 mb-2">
+                <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button class="m-0 p-0">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strok-width="0.5" stroke="black" class="size-16 cursor-pointer hover:fill-blue-200 transition-all ease-in-out duration-100">

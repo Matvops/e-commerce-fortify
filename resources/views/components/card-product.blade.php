@@ -1,10 +1,10 @@
-<li class="bg-zinc-100 w-[400px] min-w-[200px] max-w-[35%] mb-6">
-    <div>
+<li class="bg-zinc-100 w-[400px] min-w-[200px] max-w-[35%] mb-6 flex flex-col">
+    <div class="flex-1 bg-white">
         <img src="http://localhost/{{ $product->product_image }}" alt="{{$product->product_name}}">
     </div>
 
     <div class="px-4">
-        <p class="text-lg font-medium mb-2">{{$product->product_name}}</p>
+        <p class="text-lg font-medium my-2">{{$product->product_name}}</p>
         <div class="flex justify-between items-center py-2">
             <p class="text-lg font-medium text-blue-900">R$ {{$product->product_price}}</p>
                 <form action="{{ route('product-cart.add') }}" method="post">
