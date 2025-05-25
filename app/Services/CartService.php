@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductCart;
 use App\Models\User;
+use App\Utils\Response;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -69,18 +70,10 @@ class CartService {
                                 ->delete();
             
             DB::commit();
-            return 
-                [
-                    'status' => true,
-                    'message' => 'Produto removido do carrinho.'
-                ];
+            return Response::getResponse(true, 'Produto removido do carrinho');
         } catch(Exception $e) { 
             DB::rollBack();
-            return 
-                [
-                    'status' => false,
-                    'message' => 'Erro ao remover produto.'
-                ];
+            return Response::getResponse(false, 'Erro ao remover produto.');
         }
     }
 
@@ -101,18 +94,11 @@ class CartService {
 
 
             DB::commit();
-            return 
-            [
-                'status' => true,
-                'message' => 'Produto adicionado ao carrinho.'
-            ];
+
+            return Response::getResponse(true, 'Produto adicionado ao carrinho.');
         } catch (Exception $e) {
             DB::rollback();
-            return 
-            [
-                'status' => false,
-                'message' => 'Erro ao adicionar produto.'
-            ];
+            return Response::getResponse(false, 'Erro ao adicionar produto.');
         }
     }
 

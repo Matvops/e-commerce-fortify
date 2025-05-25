@@ -32,8 +32,8 @@ class CartController extends Controller
 
         return redirect()
                 ->back()
-                ->with('productRemoveStatus', $response['status'])
-                ->with('productRemoveMessage', $response['message']);
+                ->with('productRemoveStatus', $response->getStatus())
+                ->with('productRemoveMessage', $response->getMessage());
     }
 
 
@@ -45,7 +45,7 @@ class CartController extends Controller
 
         return redirect()
                 ->back()
-                ->with('addProductStatus', $response['status'])
-                ->with('addProductMessage', $response['message']);
+                ->with('addProductStatus', $response->getStatus())
+                ->with('addProductMessage', $response->getMessage());
     }
 }
