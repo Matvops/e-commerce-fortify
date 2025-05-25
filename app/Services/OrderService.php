@@ -42,13 +42,12 @@ class OrderService {
             if(!$products)
                 throw new NotFoundResourceException("Carrinho vazio.");
 
-            $this->createOrder($cart);
 
             foreach ($products as $product) {
                 $this->updateProduct($product);
             }
 
-            $this->clearCart($cart);
+            $this->createOrderAndClearCart($cart);
 
             DB::commit();
 
@@ -63,18 +62,23 @@ class OrderService {
         
     }
 
-    private function createOrder($cart){
-        $order = new Order();
-        $order->order_price = $cart->cart_total_price;
-        $order->order_user_id = $cart->cart_user_id;
-        $order->save();
-    }
-
     private function updateProduct($product){
         $productCart = ProductCart::where('pc_product_id', $product->product_id)->first();
         $product->product_quantity = $product->product_quantity - $productCart->pc_quantity;
         $product->product_quantity_sold = $product->product_quantity_sold + $productCart->pc_quantity;
         $product->save();
+    }
+
+    private function createOrderAndClearCart($cart){
+        $this->createOrder($cart);
+        $this->clearCart($cart);
+    }
+
+    private function createOrder($cart) {
+        $order = new Order();
+        $order->order_price = $cart->cart_total_price;
+        $order->order_user_id = $cart->cart_user_id;
+        $order->save();
     }
 
     private function clearCart($cart) {

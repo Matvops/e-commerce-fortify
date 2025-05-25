@@ -28,7 +28,7 @@ class CartController extends Controller
 
     public function removeProductCart(RemoveProductCartRequest $request){
 
-        $response = $this->service->removeCartById($request->input('product_id'));
+        $response = $this->service->removeProductCartById($request->input('product_id'));
 
         return redirect()
                 ->back()
