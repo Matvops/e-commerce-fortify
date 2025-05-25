@@ -232,7 +232,7 @@ Abaixo estão algumas funcionalidades do projeto.
 
 Matheus Cadenassi - @Matvops
 
-Link do projeto: https://github.com/Matvops/Biblioteca-Digital
+Link do projeto: https://github.com/Matvops/e-commerce-fortify
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
 
