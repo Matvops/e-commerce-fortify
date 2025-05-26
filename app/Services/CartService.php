@@ -26,7 +26,7 @@ class CartService {
         return $cart;
     }
 
-    private function createCart(){
+    private static function createCart(){
         $cart = new Cart();
         $cart->cart_user_id = Auth::id();
         $cart->cart_total_price = 0.00;
